@@ -1,9 +1,13 @@
 package com.powerclould.flowersshop.model;
 
+
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Customer {
@@ -19,6 +23,9 @@ public class Customer {
     private String email;
 
     private String address;
+
+    @OneToMany(mappedBy = "customer")
+    private List<FlowersOrder> orders;
 
     public Customer(String name, String phone, String email, String address) {
         this.name = name;

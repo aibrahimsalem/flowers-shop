@@ -1,24 +1,33 @@
 package com.powerclould.flowersshop.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+
+@Entity
 public class OrderFlowerWrapper {
     
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private int orderId;
+    
+    @ManyToOne
+    @JoinColumn(name = "flowers_order_id", nullable = false)
+    private FlowersOrder flowersOrderId;
 
-    private int flowerWrapperId;
+    @ManyToOne
+    @JoinColumn(name = "flowers_wrapper_id", nullable = false)
+    private FlowersWrapper flowerWrapperId;
 
-    private int flowerId;
+    @ManyToOne
+    @JoinColumn(name = "flower_id", nullable = false)
+    private Flower flower;
 
     
-
-    public OrderFlowerWrapper(int id, int orderId, int flowerWrapperId, int flowerId) {
-        this.id = id;
-        this.orderId = orderId;
-        this.flowerWrapperId = flowerWrapperId;
-        this.flowerId = flowerId;
-    }
-
     public int getId() {
         return id;
     }
@@ -27,28 +36,28 @@ public class OrderFlowerWrapper {
         this.id = id;
     }
 
-    public int getOrderId() {
-        return orderId;
+    public FlowersOrder getFlowersOrderId() {
+        return flowersOrderId;
     }
 
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
+    public void setFlowersOrderId(FlowersOrder flowersOrderId) {
+        this.flowersOrderId = flowersOrderId;
     }
 
-    public int getFlowerWrapperId() {
+    public FlowersWrapper getFlowerWrapperId() {
         return flowerWrapperId;
     }
 
-    public void setFlowerWrapperId(int bouquetId) {
-        this.flowerWrapperId = bouquetId;
+    public void setFlowerWrapperId(FlowersWrapper flowerWrapperId) {
+        this.flowerWrapperId = flowerWrapperId;
     }
 
-    public int getFlowerId() {
-        return flowerId;
+    public Flower getFlower() {
+        return flower;
     }
 
-    public void setFlowerId(int flowerId) {
-        this.flowerId = flowerId;
+    public void setFlower(Flower flower) {
+        this.flower = flower;
     }
 
     

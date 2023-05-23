@@ -1,9 +1,12 @@
 package com.powerclould.flowersshop.model;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Flower {
@@ -20,8 +23,6 @@ public class Flower {
 
     private float price;
 
-    
-    
     public Flower(String name, int quantity, String type, float price) {
         this.name = name;
         this.quantity = quantity;
@@ -71,7 +72,5 @@ public class Flower {
     public void setPrice(float price) {
         this.price = price;
     }
-
-    
 
 }
