@@ -1,7 +1,15 @@
 package com.powerclould.flowersshop.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
 public class Customer {
     
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String name;
@@ -12,8 +20,7 @@ public class Customer {
 
     private String address;
 
-    public Customer(int id, String name, String phone, String email, String address) {
-        this.id = id;
+    public Customer(String name, String phone, String email, String address) {
         this.name = name;
         this.phone = phone;
         this.email = email;

@@ -7,8 +7,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.powerclould.flowersshop.model.Customer;
 import com.powerclould.flowersshop.model.Flower;
 import com.powerclould.flowersshop.model.FlowersWrapper;
+import com.powerclould.flowersshop.repository.CustomerRepository;
 import com.powerclould.flowersshop.repository.FlowerRepository;
 import com.powerclould.flowersshop.repository.FlowersWrapperRepository;
 
@@ -21,6 +23,9 @@ public class FlowersShopController {
 
     @Autowired
     private FlowersWrapperRepository flowersWrapperRepository;
+
+    @Autowired
+    private CustomerRepository customerRepository;
 
     @PostMapping(path = "/flowers/add")
     public @ResponseBody String addFreshFlower(@RequestParam String name, @RequestParam String type,
@@ -45,5 +50,15 @@ public class FlowersShopController {
         flowersWrapperRepository.save(flowersWrapper);
 
         return "Added a new flowers wrapper";
+    }
+
+    @PostMapping(path = "/customers/add")
+    public @ResponseBody String addNewCustomer(@RequestParam String name, @RequestParam String phone,
+            @RequestParam String email, @RequestParam String address) {
+        Customer customer = new Customer(name, phone, email, address);
+
+        customerRepository.save(customer);
+
+        return "Added a new customer";
     }
 }
