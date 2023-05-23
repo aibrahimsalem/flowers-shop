@@ -8,18 +8,23 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.powerclould.flowersshop.model.Flower;
+import com.powerclould.flowersshop.model.FlowersWrapper;
 import com.powerclould.flowersshop.repository.FlowerRepository;
+import com.powerclould.flowersshop.repository.FlowersWrapperRepository;
 
 @Controller
 @RequestMapping(path = "/flowersshop")
 public class FlowersShopController {
-    
+
     @Autowired
     private FlowerRepository flowerRepository;
 
-    @PostMapping(path = "/add")
-    public @ResponseBody String addFreshFlower(@RequestParam String name, @RequestParam String type, @RequestParam float price, @RequestParam int quantity)
-    {
+    @Autowired
+    private FlowersWrapperRepository flowersWrapperRepository;
+
+    @PostMapping(path = "/flowers/add")
+    public @ResponseBody String addFreshFlower(@RequestParam String name, @RequestParam String type,
+            @RequestParam float price, @RequestParam int quantity) {
         Flower flower = new Flower();
 
         flower.setName(name);
@@ -30,5 +35,15 @@ public class FlowersShopController {
         flowerRepository.save(flower);
 
         return "Added a new flower";
+    }
+
+    @PostMapping(path = "/wrappers/add")
+    public @ResponseBody String addFlowersWrapper(@RequestParam String color, @RequestParam int quantity,
+            @RequestParam float price, @RequestParam String name, @RequestParam String material) {
+        FlowersWrapper flowersWrapper = new FlowersWrapper(color, quantity, price, name, material);
+
+        flowersWrapperRepository.save(flowersWrapper);
+
+        return "Added a new flowers wrapper";
     }
 }

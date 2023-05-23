@@ -1,21 +1,21 @@
 package com.powerclould.flowersshop.model;
 
-public class OrderFlowerBouquet {
+public class OrderFlowerWrapper {
     
     private int id;
 
     private int orderId;
 
-    private int bouquetId;
+    private int flowerWrapperId;
 
     private int flowerId;
 
     
 
-    public OrderFlowerBouquet(int id, int orderId, int bouquetId, int flowerId) {
+    public OrderFlowerWrapper(int id, int orderId, int flowerWrapperId, int flowerId) {
         this.id = id;
         this.orderId = orderId;
-        this.bouquetId = bouquetId;
+        this.flowerWrapperId = flowerWrapperId;
         this.flowerId = flowerId;
     }
 
@@ -35,12 +35,12 @@ public class OrderFlowerBouquet {
         this.orderId = orderId;
     }
 
-    public int getBouquetId() {
-        return bouquetId;
+    public int getFlowerWrapperId() {
+        return flowerWrapperId;
     }
 
-    public void setBouquetId(int bouquetId) {
-        this.bouquetId = bouquetId;
+    public void setFlowerWrapperId(int bouquetId) {
+        this.flowerWrapperId = bouquetId;
     }
 
     public int getFlowerId() {

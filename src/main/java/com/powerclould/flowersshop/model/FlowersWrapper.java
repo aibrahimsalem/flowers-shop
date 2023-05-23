@@ -1,7 +1,15 @@
 package com.powerclould.flowersshop.model;
 
-public class Bouquet {
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
+public class FlowersWrapper {
     
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String color;
@@ -16,7 +24,7 @@ public class Bouquet {
 
     
 
-    public Bouquet(String color, int quantity, float price, String name, String material) {
+    public FlowersWrapper(String color, int quantity, float price, String name, String material) {
         this.color = color;
         this.quantity = quantity;
         this.price = price;
