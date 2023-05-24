@@ -71,6 +71,27 @@ public class FlowersShopController {
         return "Added a new flower";
     }
 
+    @GetMapping(path = "/flowers/all")
+    private @ResponseBody List<Item> listAllFlowers() {
+        Optional<ItemType> itemType = itemTypeRepository.findById(1);
+        if(itemType.isPresent()) {
+            return itemRepository.findByItemType(itemType.get());
+        }
+        else {
+            return null;
+        }
+    }
+    
+    @GetMapping(path = "/wrappers/all")
+    private @ResponseBody List<Item> listAllWrappers() {
+        Optional<ItemType> itemType = itemTypeRepository.findById(2);
+        if (itemType.isPresent()) {
+            return itemRepository.findByItemType(itemType.get());
+        } else {
+            return null;
+        }
+    }
+
     private ItemType getItemType(int itemTypeId) {
         Optional<ItemType> itemType = itemTypeRepository.findById(itemTypeId);
         if (itemType.isPresent()) {
@@ -92,18 +113,23 @@ public class FlowersShopController {
 
     @GetMapping(path = "/flowers/buy")
     public @ResponseBody String buyFlowers() {
-        List<Customer> customers = customerRepository.findByEmail("a.ibrahim.salem@gmail.com");
+        //find customer
+        List<Customer> customers = customerRepository.findByEmail("abc@d.com");
+        //Create Order
         FlowersOrder flowersOrder = new FlowersOrder();
+        //Create Order items
         OrderItem flowerOrderItem = new OrderItem();
         OrderItem wrapperOrderItem = new OrderItem();
+        //set customer id in order
         customers.stream().findFirst().ifPresent(customer -> flowersOrder.setCustomer(customer));
+        // find products
         Optional<Item> daliaFlower = itemRepository.findById(2);
         Optional<Item> indigoWrapper = itemRepository.findById(1);
-
+        // save order
         flowersOrderRepository.save(flowersOrder);
+        // if the products are there  insert them into the order item table
         daliaFlower.ifPresent(flower -> {flowerOrderItem.setItem(flower); flowerOrderItem.setFlowersOrderId(flowersOrder);});
         indigoWrapper.ifPresent(wrapper -> {wrapperOrderItem.setItem(wrapper); wrapperOrderItem.setFlowersOrderId(flowersOrder);});
-
         orderItemRepository.save(flowerOrderItem);
         orderItemRepository.save(wrapperOrderItem);
 
