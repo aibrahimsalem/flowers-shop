@@ -1,12 +1,15 @@
 package com.powerclould.flowersshop.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 
 @Entity
-public class Flower {
+public class Item {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,14 +23,49 @@ public class Flower {
 
     private float price;
 
-    public Flower(String name, int quantity, String type, float price) {
+    private String color;
+
+    private String material;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "item_type_id", referencedColumnName = "id")
+    private ItemType itemType;
+
+    public Item(String name, int quantity, String type, float price, String color, String material) {
         this.name = name;
         this.quantity = quantity;
         this.type = type;
         this.price = price;
+        this.color = color;
+        this.material = material;
     }
 
-    public Flower() {
+    
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public String getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(String material) {
+        this.material = material;
+    }
+
+    public ItemType getItemType() {
+        return itemType;
+    }
+
+    public void setItemType(ItemType itemType) {
+        this.itemType = itemType;
+    }
+
+    public Item() {
     }
 
     public int getId() {

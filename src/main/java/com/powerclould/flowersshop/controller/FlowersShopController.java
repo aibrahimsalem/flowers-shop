@@ -1,8 +1,8 @@
 package com.powerclould.flowersshop.controller;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,48 +13,72 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.powerclould.flowersshop.model.Customer;
-import com.powerclould.flowersshop.model.Flower;
-import com.powerclould.flowersshop.model.FlowersWrapper;
+import com.powerclould.flowersshop.model.FlowersOrder;
+import com.powerclould.flowersshop.model.Item;
+import com.powerclould.flowersshop.model.ItemType;
+import com.powerclould.flowersshop.model.OrderItem;
 import com.powerclould.flowersshop.repository.CustomerRepository;
-import com.powerclould.flowersshop.repository.FlowerRepository;
-import com.powerclould.flowersshop.repository.FlowersWrapperRepository;
+import com.powerclould.flowersshop.repository.FlowersOrderRepository;
+import com.powerclould.flowersshop.repository.ItemRepository;
+import com.powerclould.flowersshop.repository.ItemTypeRepository;
+import com.powerclould.flowersshop.repository.OrderItemRepository;
 
 @Controller
 @RequestMapping(path = "/flowersshop")
 public class FlowersShopController {
 
     @Autowired
-    private FlowerRepository flowerRepository;
+    private ItemRepository itemRepository;
 
     @Autowired
-    private FlowersWrapperRepository flowersWrapperRepository;
+    private ItemTypeRepository itemTypeRepository;
 
     @Autowired
     private CustomerRepository customerRepository;
 
+    @Autowired
+    private OrderItemRepository orderItemRepository;
+
+    @Autowired
+    private FlowersOrderRepository flowersOrderRepository;
+
     @PostMapping(path = "/flowers/add")
     public @ResponseBody String addFreshFlower(@RequestParam String name, @RequestParam String type,
             @RequestParam float price, @RequestParam int quantity) {
-        Flower flower = new Flower();
+        Item flower = new Item();
 
         flower.setName(name);
         flower.setPrice(price);
         flower.setType(type);
         flower.setQuantity(quantity);
-
-        flowerRepository.save(flower);
+        flower.setItemType(getItemType(1));
+        itemRepository.save(flower);
 
         return "Added a new flower";
     }
 
     @PostMapping(path = "/wrappers/add")
-    public @ResponseBody String addFlowersWrapper(@RequestParam String color, @RequestParam int quantity,
-            @RequestParam float price, @RequestParam String name, @RequestParam String material) {
-        FlowersWrapper flowersWrapper = new FlowersWrapper(color, quantity, price, name, material);
+    public @ResponseBody String addNewWrapper(@RequestParam String name, @RequestParam String type,
+            @RequestParam float price, @RequestParam int quantity) {
+        Item wrapper = new Item();
 
-        flowersWrapperRepository.save(flowersWrapper);
+        wrapper.setName(name);
+        wrapper.setPrice(price);
+        wrapper.setType(type);
+        wrapper.setQuantity(quantity);
+        wrapper.setItemType(getItemType(2));
+        itemRepository.save(wrapper);
 
-        return "Added a new flowers wrapper";
+        return "Added a new flower";
+    }
+
+    private ItemType getItemType(int itemTypeId) {
+        Optional<ItemType> itemType = itemTypeRepository.findById(itemTypeId);
+        if (itemType.isPresent()) {
+            return itemType.get();
+        }
+
+        return null;
     }
 
     @PostMapping(path = "/customers/add")
@@ -68,27 +92,22 @@ public class FlowersShopController {
     }
 
     @GetMapping(path = "/flowers/buy")
-    public @ResponseBody String buyFlowers() throws NumberFormatException, IOException {
-        System.out.println("Please choose the flowers from the available flowers separated by commas. ex: to choose flowers 1 and 2 write 1,2");
-        System.out.println("########################################################");
-        Iterable<Flower> allFlowersIterable = flowerRepository.findAll();
-        allFlowersIterable.forEach(flower -> System.out.println("###ID###: " + flower.getId() + " ###Name###: " + flower.getName() + " ###Quantity###: " + flower.getQuantity() + " ###Price###: " + flower.getPrice() + " ###Type###: "+  flower.getType()));
-        System.out.println("########################################################");
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-        String[] flowers = bufferedReader.readLine().split(",");
-        System.out.println("Please specify the quantity for each flower respectively. ex: if you choose flower 1 and 2 write 3,5");
-        String[] quantites = bufferedReader.readLine().split(",");
-        System.out.println("You chose " + quantites[0] + " from flower " + flowers[0]);
-        System.out.println(
-                "Please choose the flowers' wrapper from the available wrappers separated by commas. ex: to choose wrapper 1 and 2 write 1,2");
-        System.out.println("########################################################");
-        Iterable<FlowersWrapper> allFlowersWrapperIterable = flowersWrapperRepository.findAll();
-        allFlowersWrapperIterable.forEach(flowerWrapper -> System.out.println("###ID###: " + flowerWrapper.getId() + " ###Name###: "
-                + flowerWrapper.getName() + " ###Quantity###: " + flowerWrapper.getQuantity() + " ###Price###: " + flowerWrapper.getPrice()
-                + " ###Material###: " + flowerWrapper.getMaterial() + " Color: " + flowerWrapper.getColor()));
-        System.out.println("########################################################");
-        String[] wrappers = bufferedReader.readLine().split(",");
-        System.out.println("You chose " + wrappers[0] + " from flower " + flowers[0]);
-        return "listed all flowers";
+    public @ResponseBody String buyFlowers() {
+        List<Customer> customers = customerRepository.findByEmail("a.ibrahim.salem@gmail.com");
+        FlowersOrder flowersOrder = new FlowersOrder();
+        OrderItem flowerOrderItem = new OrderItem();
+        OrderItem wrapperOrderItem = new OrderItem();
+        customers.stream().findFirst().ifPresent(customer -> flowersOrder.setCustomer(customer));
+        Optional<Item> daliaFlower = itemRepository.findById(2);
+        Optional<Item> indigoWrapper = itemRepository.findById(1);
+
+        flowersOrderRepository.save(flowersOrder);
+        daliaFlower.ifPresent(flower -> {flowerOrderItem.setItem(flower); flowerOrderItem.setFlowersOrderId(flowersOrder);});
+        indigoWrapper.ifPresent(wrapper -> {wrapperOrderItem.setItem(wrapper); wrapperOrderItem.setFlowersOrderId(flowersOrder);});
+
+        orderItemRepository.save(flowerOrderItem);
+        orderItemRepository.save(wrapperOrderItem);
+
+        return "done";
     }
 }

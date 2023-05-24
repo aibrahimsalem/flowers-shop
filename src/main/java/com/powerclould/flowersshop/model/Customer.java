@@ -3,6 +3,7 @@ package com.powerclould.flowersshop.model;
 
 import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,6 +21,7 @@ public class Customer {
 
     private String phone;
 
+    @Column(unique = true)
     private String email;
 
     private String address;
@@ -32,6 +34,10 @@ public class Customer {
         this.phone = phone;
         this.email = email;
         this.address = address;
+    }
+
+
+    public Customer() {
     }
 
     public int getId() {

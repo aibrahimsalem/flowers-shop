@@ -9,8 +9,7 @@ import jakarta.persistence.ManyToOne;
 
 @Entity
 public class FlowersOrder {
-    
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -19,7 +18,6 @@ public class FlowersOrder {
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
-    
     public FlowersOrder() {
     }
 
@@ -35,9 +33,8 @@ public class FlowersOrder {
         return customer;
     }
 
-    public void setCustomerId(Customer customer) {
+    public void setCustomer(Customer customer) {
         this.customer = customer;
     }
 
-    
 }

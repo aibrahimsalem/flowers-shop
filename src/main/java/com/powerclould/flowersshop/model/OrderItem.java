@@ -8,7 +8,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
-public class OrderFlowerWrapper {
+public class OrderItem {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,13 +19,10 @@ public class OrderFlowerWrapper {
     @JoinColumn(name = "flowers_order_id", nullable = false)
     private FlowersOrder flowersOrderId;
 
-    @ManyToOne
-    @JoinColumn(name = "flowers_wrapper_id", nullable = false)
-    private FlowersWrapper flowerWrapperId;
 
     @ManyToOne
-    @JoinColumn(name = "flower_id", nullable = false)
-    private Flower flower;
+    @JoinColumn(name = "item_id", nullable = false)
+    private Item item;
 
     
     public int getId() {
@@ -44,21 +41,15 @@ public class OrderFlowerWrapper {
         this.flowersOrderId = flowersOrderId;
     }
 
-    public FlowersWrapper getFlowerWrapperId() {
-        return flowerWrapperId;
+    public Item getItem() {
+        return item;
     }
 
-    public void setFlowerWrapperId(FlowersWrapper flowerWrapperId) {
-        this.flowerWrapperId = flowerWrapperId;
+    public void setItem(Item item) {
+        this.item = item;
     }
 
-    public Flower getFlower() {
-        return flower;
+    public OrderItem() {
     }
 
-    public void setFlower(Flower flower) {
-        this.flower = flower;
-    }
-
-    
 }
