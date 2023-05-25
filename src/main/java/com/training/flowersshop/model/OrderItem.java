@@ -10,16 +10,14 @@ import jakarta.persistence.ManyToOne;
 
 @Entity
 public class OrderItem {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    
     @ManyToOne
     @JoinColumn(name = "flowers_order_id", nullable = false)
-    private FlowersOrder flowersOrderId;
-
+    private FlowersOrder flowersOrder;
 
     @ManyToOne
     @JoinColumn(name = "item_id", nullable = false)
@@ -28,7 +26,6 @@ public class OrderItem {
     @Column(name = "quantity")
     private int quantity;
 
-    
     public int getId() {
         return id;
     }
@@ -37,12 +34,12 @@ public class OrderItem {
         this.id = id;
     }
 
-    public FlowersOrder getFlowersOrderId() {
-        return flowersOrderId;
+    public FlowersOrder getFlowersOrder() {
+        return flowersOrder;
     }
 
-    public void setFlowersOrderId(FlowersOrder flowersOrderId) {
-        this.flowersOrderId = flowersOrderId;
+    public void setFlowersOrder(FlowersOrder flowersOrderId) {
+        this.flowersOrder = flowersOrderId;
     }
 
     public Item getItem() {
