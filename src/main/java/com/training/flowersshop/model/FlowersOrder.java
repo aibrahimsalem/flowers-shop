@@ -25,8 +25,8 @@ public class FlowersOrder {
         return id;
     }
 
-    public void setId(int orderId) {
-        this.id = orderId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Customer getCustomer() {
