@@ -23,24 +23,24 @@ public class ItemTypeController {
     private ItemTypeFacade itemTypeFacade;
 
     @PostMapping(path = "/add")
-    private @ResponseBody ItemType addItemType(@RequestParam(required = false) Integer id, @RequestParam String name) {
+    public @ResponseBody ItemType addItemType(@RequestParam(required = false) Integer id, @RequestParam String name) {
 
         return itemTypeFacade.addOrUpdateItemType(-1, name);
     }
 
     @GetMapping(path = "/all")
-    private @ResponseBody List<ItemType> listAllItemTypess() {
+    public @ResponseBody List<ItemType> listAllItemTypess() {
         return itemTypeFacade.listAllItemTypes();
     }
 
     @GetMapping(path = "delete/{itemTypeId}")
-    private @ResponseBody String deleteItemById(@PathVariable int itemTypeId) {
+    public @ResponseBody String deleteItemById(@PathVariable int itemTypeId) {
         itemTypeFacade.deleteItemTypeById(itemTypeId);
         return "Item type " + itemTypeId + " has been deleted successfully";
     }
 
     @PostMapping(path = "/update")
-    private @ResponseBody ItemType updateItemType(@RequestParam int id, @RequestParam String name) {
+    public @ResponseBody ItemType updateItemType(@RequestParam int id, @RequestParam String name) {
 
         return itemTypeFacade.addOrUpdateItemType(id, name);
     }

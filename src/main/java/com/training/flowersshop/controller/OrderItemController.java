@@ -22,25 +22,25 @@ public class OrderItemController {
     private OrderItemFacade orderItemFacade;
 
     @PostMapping(path = "/add")
-    private @ResponseBody OrderItem addOrderItem(@RequestParam(required = false) Integer id, @RequestParam int quantity,
+    public @ResponseBody OrderItem addOrderItem(@RequestParam(required = false) Integer id, @RequestParam int quantity,
             @RequestParam int flowersOrderId, @RequestParam int itemId) {
 
         return orderItemFacade.addOrUpdateOrderItem(-1, quantity, flowersOrderId, itemId);
     }
 
     @GetMapping(path = "/all")
-    private @ResponseBody List<OrderItem> listAllOrderItemss() {
+    public @ResponseBody List<OrderItem> listAllOrderItemss() {
         return orderItemFacade.listAllOrderItems();
     }
 
     @GetMapping(path = "delete/{orderItemId}")
-    private @ResponseBody String deleteItemById(@PathVariable int orderItemId) {
+    public @ResponseBody String deleteItemById(@PathVariable int orderItemId) {
         orderItemFacade.deleteOrderItemById(orderItemId);
         return "Order item " + orderItemId + " has been deleted successfully";
     }
 
     @PostMapping(path = "/update")
-    private @ResponseBody OrderItem updateOrderItem(@RequestParam int id, @RequestParam int quantity,
+    public @ResponseBody OrderItem updateOrderItem(@RequestParam int id, @RequestParam int quantity,
             @RequestParam int flowersOrderId, @RequestParam int itemId) {
 
         return orderItemFacade.addOrUpdateOrderItem(id, quantity, flowersOrderId, itemId);

@@ -22,7 +22,7 @@ public class ItemController {
     private ItemFacade itemFacade;
 
     @PostMapping(path = "/add")
-    private @ResponseBody Item addItem(@RequestParam(required = false) Integer id, @RequestParam String name,
+    public @ResponseBody Item addItem(@RequestParam(required = false) Integer id, @RequestParam String name,
             @RequestParam int quantity, @RequestParam String type, @RequestParam String color,
             @RequestParam float price, @RequestParam String material) {
 
@@ -30,18 +30,18 @@ public class ItemController {
     }
 
     @GetMapping(path = "/all")
-    private @ResponseBody List<Item> listAllItems() {
+    public @ResponseBody List<Item> listAllItems() {
         return itemFacade.listAllItems();
     }
 
     @GetMapping(path = "delete/{itemId}")
-    private @ResponseBody String deleteItemById(@PathVariable int itemId) {
+    public @ResponseBody String deleteItemById(@PathVariable int itemId) {
         itemFacade.deleteItemById(itemId);
         return "Item " + itemId + " has been deleted successfully";
     }
 
     @PostMapping(path = "/update")
-    private @ResponseBody Item updateItem(@RequestParam int id, @RequestParam String name,
+    public @ResponseBody Item updateItem(@RequestParam int id, @RequestParam String name,
             @RequestParam int quantity, @RequestParam String type, @RequestParam String color,
             @RequestParam float price, @RequestParam String material) {
                 

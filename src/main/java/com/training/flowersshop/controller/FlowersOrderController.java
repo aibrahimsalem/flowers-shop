@@ -21,24 +21,24 @@ public class FlowersOrderController {
     private FlowersOrderFacade flowersOrderFacade;
 
     @PostMapping(path = "/add")
-    private @ResponseBody FlowersOrder addFlowersOrder(@RequestParam(required = false) Integer id,
+    public @ResponseBody FlowersOrder addFlowersOrder(@RequestParam(required = false) Integer id,
             @RequestParam int customerId) {
                 return flowersOrderFacade.addOrUpdateFlowersOrder(-1, customerId);
     }
 
     @GetMapping(path = "/all")
-    private @ResponseBody List<FlowersOrder> getAllFlowersOrder() {
+    public @ResponseBody List<FlowersOrder> getAllFlowersOrder() {
         return flowersOrderFacade.getAllFlowersOrder();
     }
 
     @GetMapping(path = "/delete/{flowersOrderId}")
-    private @ResponseBody String deleteFlowersOrderById(@RequestParam int flowersOrderId) {
+    public @ResponseBody String deleteFlowersOrderById(@RequestParam int flowersOrderId) {
         flowersOrderFacade.deleteFlowersOrderById(flowersOrderId);
         return "Flowers Order "+ flowersOrderId + " deleted successfully";
     }
 
     @PostMapping(path = "/update")
-    private @ResponseBody FlowersOrder updateFlowersOrder(@RequestParam(required = false) Integer id,
+    public @ResponseBody FlowersOrder updateFlowersOrder(@RequestParam(required = false) Integer id,
             @RequestParam int customerId) {
            return flowersOrderFacade.addOrUpdateFlowersOrder(id, customerId);     
     }
