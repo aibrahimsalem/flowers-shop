@@ -21,7 +21,7 @@ public class OrderItemControllerTest {
     @Test
     void testAddOrderItem() throws Exception {
         this.mockMvc.perform(post("/order/item/add").param("quantity", "10")
-        .param("flowersOrderId", "2").param("itemId", "2"))
+        .param("flowersOrderId", "1").param("itemId", "1"))
         .andDo(print()).andExpect(status().isOk());
     }
 
@@ -40,7 +40,7 @@ public class OrderItemControllerTest {
     @Test
     void testUpdateOrderItem() throws Exception {
         this.mockMvc.perform(post("/order/item/update").param("id","1").param("quantity", "10")
-                .param("flowersOrderId", "2").param("itemId", "2"))
+                .param("flowersOrderId", "1").param("itemId", "1"))
                 .andDo(print()).andExpect(status().isOk());
     }
 }
